@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Train Schedule</h1>
+    </div>
+    <div class="container">
+     <h1>Current Train Schedule</h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Job Title</th>
+            <th scope="col">Star Date</th>
+            <th scope="col">Month's Worked</th>
+            <th scope="col">Monthly Rate</th>
+            <th scope="col">Total Pay</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+        </div>
+    <div class="container">
+    <div class="form">
+        <form>
+            <div class="form-group">
+              <h1>Add Train</h1>
+              <label for="name-input">Name</label>
+              <input type="email" class="form-control" id="name-input" placeholder="John Smith">
+            </div>
+            <div class="form-group">
+              <label for="job-input">Job Title</label>
+              <select class="form-control" id="job-input">
+                <option value="" disabled selected>Job Title</option>
+                <option>Bartender</option>
+                <option>Bus Boy</option>
+                <option>Cook</option>
+                <option>Dish Washer</option>
+                <option>Manager</option>
+                <option>Waiter</option>
+
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Star Date</label>
+              <form>
+                <input type="date" name="starDate" id="starDate-input">
+                <input type="submit">
+              </form>
+            </div>
+            <div class="form-group">
+              <label for="rate-input">Monthly Rate</label>
+              <input class="form-control" id="rate-input"></input>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+          </form>
+    </div>
+  </div>
+
+  </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+<script type="text/javascript" src="timecard.js"></script>
+
+</html>
