@@ -40,8 +40,7 @@ var trainName = "";
 var destination = "";
 var firstTrainTime = 0;
 var frequency = 0;
-
-var myTimer = setInterval(myTimer, 1000);
+var now = moment();
 
 //get input from the form entry and write to fire base db
 $("#submit-train").on("click", function(event) {
@@ -54,43 +53,16 @@ $("#submit-train").on("click", function(event) {
   console.log(trainName, destination, firstTrainTime, frequency);
   console.log(typeof firstTrainTime, typeof frequency);
 
-  
-  var firstTrainConverted = moment(firstTrainTime, "hh:mm");
-  console.log(firstTrainConverted);
-  var diffTime = moment().diff(moment(firstTrainConverted), "minutes");
-  console.log(diffTime);
-  var tRemainder = diffTime % frequency;
-  console.log(tRemainder);
-   var minutesTillTrain = frequency - tRemainder;
-  console.log(minutesTillTrain);
-  // var nextTrain = firstTrainConverted.add(diffTime + minutesTillTrain).minutes();
-  var nextTrain = moment().add(minutesTillTrain, "minutes");
-  var nextTrain2 = moment().add(2, "minutes")
-  console.log("num1" + nextTrain);
-  console.log("num2" + nextTrain2);
-  nextTrain = moment(nextTrain).format("HH:mm");
-  console.log("num1" + nextTrain);
-
-  database.ref("/trainData").set({
-    trainName: trainName,
-    destination: destination,
-    firstTrainTime: firstTrainTime,
-    frequency: frequency
-  });
-
-
-
   var newTrain = {
     trainName: trainName,
     destination: destination,
     firstTrainTime: firstTrainTime,
     frequency: frequency,
-    nextTrain: nextTrain,
+    nextArrival: nextArrival,
     minutesTillTrain: minutesTillTrain
   };
-
-  // Uploads employee data to the database
-  database.ref().push(newTrain);
+  // Uploads train data to the database
+  database.ref("/trainData").push(newTrain);
 
   // Logs everything to console
   // console.log(newTrain.name);
@@ -111,4 +83,45 @@ $("#submit-train").on("click", function(event) {
   $("#destination-input").val("");
   $("#trainTime-input").val("");
   $("#frequency-input").val("");
+});
+
+database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+
+  console.log(childSnapshot.val());
+
+  // Store everything into a variable.
+  var trainName = childSnapshot.val().trainName;
+  var destination = childSnapshot.val().destination;
+  var frequency = childSnapshot.val().frequency;
+  var nextArrival = childSnapshot.val().nextArrival;
+  var minutesAway = childSnapshot.val().minutesTillTrain;
+
+  console.log(trainName, destination, frequency, nextArrival, minutesAway);
+
+  // Prettify the employee start
+  var nextArrival = moment.unix(nextArrival).format("MM/DD/YY");
+  // First Train of the Day is 3:00 AM
+  // Assume Train comes every 7 minutes.-->frequency
+  // Assume the current time is 3:16 AM....--->currentTime
+  //diffTime=currentTime-firstTrainTime-->16min
+  //minutes since last train 
+  // What time would the next train be...? (Use your brain first)--->train1:3:07;train2:3:14;train3:3:21 
+  // It would be 3:21 -- 5 minutes away-->minutesAway=nextArrival-currentTime
+  
+  var firstTime = moment(firstTrainTime, "hh:mm").subtract(1, "years");
+  console.log(firstTime);
+  //difference between first time and current time 
+  var diffTime = moment().diff(moment(firstTime), "minutes");
+  //minutes since last train left diffTime%frequency
+  var timeApart = diffTime % frequency;
+  console.log(timeApart);
+
+  var minutesAway = frequency - timeApart;
+  console.log(minutesAway);
+  var nextArrival = moment().add(minutesAway, "minutes");
+  nextArrival=moment(nextArrival).format("hh:mm");
+
+  // Add each train's data into the table
+  $("#trainTable > tbody").append("<tr><td>" + trainName + "</td><td>" + destination + "</td><td>" +
+  frequency + "</td><td>" + nextArrival + "</td><td>" + minutesAway + "</td></tr>");
 });
