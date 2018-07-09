@@ -66,13 +66,13 @@ connectionsRef.on("child_added", function(childSnapshot, prevChildKey) {
   var frequency = childSnapshot.val().frequency;
   console.log(trainName, destination, firstTrainTime, frequency);
   console.log(typeof trainName, typeof destination, typeof firstTrainTime, typeof frequency);
-  // First Train of the Day is 3:00 AM
+  //Working out the math
+  // First Train of the Day is 8:00 AM.-->firstTrainTime
   // Assume Train comes every 7 minutes.-->frequency
-  // Assume the current time is 3:16 AM....--->currentTime
-  //diffTime=currentTime-firstTrainTime-->16min
-  //minutes since last train 
-  // What time would the next train be...? (Use your brain first)--->train1:3:07;train2:3:14;train3:3:21 
-  // It would be 3:21 -- 5 minutes away-->minutesAway=nextArrival-currentTime
+  // Assume the current time is 8:16 AM....--->currentTime
+  //diffTime=currentTime-firstTrainTime-->16min minutes since last train 
+  // What time would the next train be...? (Use your brain first)--->train1:8:07;train2:8:14;train3:8:21 
+  // It would be 8:21 -- 5 minutes away from currentTime-->minutesAway=nextArrival-currentTime
   
   var firstTime = moment(firstTrainTime, "h:mm a").subtract(1, "years");
   console.log(firstTime);
