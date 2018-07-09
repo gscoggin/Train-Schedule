@@ -45,8 +45,6 @@ $("#submit-train").on("click", function(event) {
     destination: destination,
     firstTrainTime: firstTrainTime,
     frequency: frequency,
-    // nextArrival: nextArrival,
-    // minutesTillTrain: minutesTillTrain
   };
   // Uploads train data to the database
   database.ref("/trainData").push(newTrain);
@@ -60,17 +58,14 @@ $("#submit-train").on("click", function(event) {
 });
 
 connectionsRef.on("child_added", function(childSnapshot, prevChildKey) {
-
   console.log(childSnapshot.val());
-
   // Store everything into a variable.
   var trainName = childSnapshot.val().trainName;
   var destination = childSnapshot.val().destination;
   var firstTrainTime = childSnapshot.val().firstTrainTime;
   var frequency = childSnapshot.val().frequency;
-
-  console.log(trainName, destination, frequency, nextArrival, minutesAway);
-
+  console.log(trainName, destination, firstTrainTime, frequency);
+  console.log(typeof trainName, typeof destination, typeof firstTrainTime, typeof frequency);
   // First Train of the Day is 3:00 AM
   // Assume Train comes every 7 minutes.-->frequency
   // Assume the current time is 3:16 AM....--->currentTime
