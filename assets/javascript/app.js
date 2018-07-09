@@ -79,7 +79,7 @@ connectionsRef.on("child_added", function(childSnapshot, prevChildKey) {
   // What time would the next train be...? (Use your brain first)--->train1:3:07;train2:3:14;train3:3:21 
   // It would be 3:21 -- 5 minutes away-->minutesAway=nextArrival-currentTime
   
-  var firstTime = moment(firstTrainTime, "hh:mm").subtract(1, "years");
+  var firstTime = moment(firstTrainTime, "h:mm a").subtract(1, "years");
   console.log(firstTime);
   //difference between first time and current time 
   var diffTime = moment().diff(moment(firstTime), "minutes");
@@ -92,7 +92,7 @@ connectionsRef.on("child_added", function(childSnapshot, prevChildKey) {
   console.log(minutesAway);
 
   var nextArrival = moment().add(minutesAway, "minutes");
-  nextArrival=moment(nextArrival).format("hh:mm");
+  nextArrival=moment(nextArrival).format("h:mm a");
   console.log(nextArrival);
 
   // Add each train's data into the table
